@@ -14,7 +14,7 @@ const HomePage = () => {
         >
           <source src="/stadium.mp4" type="video/mp4" />
         </video>
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
+        <h1 className="text-3xl sm:text-6xl font-bold mb-4">
           🏆 Bet Smart. Win Big.
         </h1>
         <p className="text-lg md:text-xl text-gray-300 max-w-xl mb-8">
@@ -37,6 +37,13 @@ const HomePage = () => {
             { match: "🏀 Lakers vs Celtics", odds: "2.3x", tag: "LIVE" },
             { match: "⚽ Arsenal vs Man U", odds: "1.8x", tag: "65% Arsenal" },
             { match: "🎾 Nadal vs Alcaraz", odds: "3.0x", tag: "CLOSE ODDS" },
+            { match: "🏏 India vs Pakistan", odds: "2.1x", tag: "HOT PICK" },
+            { match: "🏈 Chiefs vs Eagles", odds: "2.7x", tag: "HIGH STAKES" },
+            { match: "🎮 CS:GO Grand Finals", odds: "4.5x", tag: "ESPORTS" },
+            { match: "⚽ PSG vs Real Madrid", odds: "2.0x", tag: "TRENDING" },
+            { match: "🥊 Fury vs Usyk", odds: "2.9x", tag: "FIGHT NIGHT" },
+            { match: "🎾 Osaka vs Swiatek", odds: "3.2x", tag: "WOMEN’S SLAM" },
+            { match: "🏀 Warriors vs Bucks", odds: "1.6x", tag: "UNDERDOG WIN" },
           ].map((item, idx) => (
             <div
               key={idx}
@@ -51,14 +58,17 @@ const HomePage = () => {
       </section>
 
       {/* Highlights Section */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 py-16 px-6 bg-black">
+      <section className="grid grid-cols-1 py-8 md:grid-cols-3 gap-6 md:py-16 px-6 bg-black">
         {[
-          { icon: "🛡️", title: "100% Secure", desc: "Encrypted & Regulated" },
-          { icon: "🚀", title: "Instant Payouts", desc: "Fast withdrawals" },
-          { icon: "📱", title: "Mobile Ready", desc: "Smooth on all devices" },
-          { icon: "🌟", title: "Easy win", desc: "just invest your skills and win in seconds" },
-          { icon: "📱", title: "Mobile Ready", desc: "Smooth on all devices" },
-          { icon: "📱", title: "Mobile Ready", desc: "Smooth on all devices" },
+           { icon: "🛡️", title: "100% Secure", desc: "Encrypted & Regulated" },
+           { icon: "🚀", title: "Instant Payouts", desc: "Fast withdrawals" },
+           { icon: "📱", title: "Mobile Ready", desc: "Seamless play on any device" },
+          //  { icon: "🌟", title: "Skill-Based Wins", desc: "Invest your skills & win in seconds" },
+          //  { icon: "📊", title: "Live Odds", desc: "Real-time dynamic betting odds" },
+          //  { icon: "🎮", title: "Multiple Games", desc: "Fantasy, sports, cards & more" },
+          //  { icon: "👥", title: "Community Play", desc: "Play with friends or join global contests" },
+          //  { icon: "🎁", title: "Daily Rewards", desc: "Login bonuses & special offers" },
+          //  { icon: "🌐", title: "Global Access", desc: "Play anywhere, anytime" },
         ].map((item, idx) => (
           <div
             key={idx}
