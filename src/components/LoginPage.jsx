@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [step, setStep] = useState("phone"); 
   const [phone, setPhone] = useState("");
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState("");   
+  const navigate=useNavigate();
   const [sentOtp, setSentOtp] = useState("");
   const [userData, setUserData] = useState({
     Name: "",
@@ -43,6 +45,7 @@ const LoginPage = () => {
       position: "top-right",
     });
     console.log("User JSON:", result);
+    navigate('/BetVerse/Login/Games')
   };
 
   return (
@@ -57,6 +60,16 @@ const LoginPage = () => {
                   placeholder="Enter Phone number"
                   className={`w-full sm:px-6 mb-2 sm:p-2 border rounded peer px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
                   value={phone}
+                  // onBlur={(e) => {
+                  //   const value=e.target.value;
+                  //   if (!/^\d{10}$/.test(value)) {
+                  //     toast.error("Phone number must be of 10 digits", { duration: 3000, position: "top-right" });
+                  //     setIsInvalidMob(true);
+                  //     e.target.focus(); 
+                  //   }else{
+                  //     setIsInvalidMob(false);
+                  //   }
+                  // }}
                   onChange={(e) => setPhone(e.target.value)}
                 />
                 <div className={`ml-4 w-0 h-1 rounded-full transition-all mb-4 duration-300 peer-hover:w-[60%] peer-focus:w-[88%] sm:peer-focus:w-[87%] bg-blue-500`}></div>
