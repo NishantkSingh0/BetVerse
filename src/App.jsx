@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.jsx'
 import { Toaster } from 'react-hot-toast';
 import LoginPage from './components/LoginPage.jsx'
 import GamePage from './components/GamePage.jsx'
+import PurchaseCoin from './components/PurchaseCoin.jsx'
 
 function App() {
 
@@ -14,9 +15,10 @@ function App() {
     <div>
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
-        <Route path="/BetVerse/" element={<HomePage />} />
-        <Route path="/BetVerse/Login" element={<LoginPage />} />
-        <Route path="/BetVerse/Login/Games" element={<GamePage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/Login" element={<LoginPage />} />
+        <Route path="/Games" element={<GamePage />} />
+        <Route path="/Purchase" element={<PurchaseCoin />} />
       </Routes>
     </div>
   )

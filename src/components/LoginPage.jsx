@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
+import {useUser} from "./userContext.jsx"
 
 const LoginPage = () => {
   const [step, setStep] = useState("phone"); 
@@ -8,11 +9,7 @@ const LoginPage = () => {
   const [otp, setOtp] = useState("");   
   const navigate=useNavigate();
   const [sentOtp, setSentOtp] = useState("");
-  const [userData, setUserData] = useState({
-    Name: "",
-    Coins: "20",
-    Enrolled: [],
-  });
+  const { userData, setUserData } = useUser();
 
   const sendOtp = () => {
     // Simulate OTP send
@@ -45,7 +42,7 @@ const LoginPage = () => {
       position: "top-right",
     });
     console.log("User JSON:", result);
-    navigate('/BetVerse/Login/Games')
+    navigate('/Games')
   };
 
   return (
@@ -115,10 +112,10 @@ const LoginPage = () => {
 
         {step === "form" && (
           <>
-            <h2 className="text-xl mb-4 font-semibold">User Details</h2>
+            <h2 className="text-xl mb-4 font-semibold">Tell us your name</h2>
             <input
                type="text"
-               placeholder="Enter your name"
+               placeholder="Enter your first name"
                className={`w-full sm:px-6 mb-2 sm:p-2 border rounded peer px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
                value={userData.Name}
                onChange={(e) =>

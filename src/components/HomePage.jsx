@@ -25,7 +25,7 @@ const HomePage = () => {
         <div className="flex gap-4 flex-wrap justify-center">
           <button
             className="bg-gradient-to-r from-green-400 to-blue-500 px-6 py-3 rounded-full font-semibold shadow-lg hover:scale-105 transition"
-            onClick={() => navigate('/BetVerse/Login')}
+            onClick={() => navigate('/Login')}
           >
             Let's bet!
           </button>

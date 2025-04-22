@@ -1,0 +1,109 @@
+import React from 'react';
+import { ArrowLeft, ShoppingCart } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from './userContext.jsx';
+
+export default function PurchaseCoin() {
+  const { userData } = useUser();
+  const navigate = useNavigate();
+
+  const coinPackages = [
+    {
+      price: '₹100',
+      coins: 112.75,
+      popular: true
+    },
+    {
+      price: '₹80',
+      coins: 85.65
+    },
+    {
+      price: '₹64',
+      coins: 68.45
+    },
+    {
+      price: '₹46',
+      coins: 48.82
+    }
+  ];
+
+  const handlePurchase = (price, coins) => {
+    // Here you would implement your payment gateway integration
+    console.log(`Processing purchase: ${price} for ${coins} coins`);
+    // After successful payment, navigate back to the game page
+    // navigate('/game');
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4">
+      {/* Header */}
+      <div className="flex items-center mb-6">
+        <Link to="/Games" className="mr-4">
+          <ArrowLeft className="w-6 h-6 text-gray-700" />
+        </Link>
+        <h1 className="text-2xl font-bold text-gray-800">Purchase Coins</h1>
+      </div>
+
+      {/* Current Balance */}
+      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-gray-600 text-sm">Current Balance</p>
+            <p className="text-xl font-bold text-yellow-600">💰 {userData?.Coins || 0}</p>
+          </div>
+          <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
+            Game Currency
+          </div>
+        </div>
+      </div>
+
+      {/* Coin Packages */}
+      <div className="grid gap-4">
+        {coinPackages.map((pkg, index) => (
+          <div 
+            key={index} 
+            className={`bg-white rounded-xl shadow-md w-4/5 h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
+          >
+            {pkg.popular && (
+              <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
+                POPULAR
+              </div>
+            )}
+            
+            <div className="flex flex-col justify-between h-full p-6">
+              <div>
+                <div className="flex justify-between items-center mb-4">
+                  <div className="text-xl font-bold text-gray-800">{pkg.price}</div>
+                  <div className="text-2xl font-bold text-yellow-600">💰 {pkg.coins}</div>
+                </div>
+                
+                <div className="text-sm text-gray-500 mb-6">
+                  Buy game coins to participate in various games and win exciting rewards!
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => handlePurchase(pkg.price, pkg.coins)}
+                className={`w-full py-3 rounded-lg font-medium text-white ${pkg.popular ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} transition-colors flex items-center justify-center`}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Purchase Now
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Information */}
+      <div className="mt-8 bg-white rounded-lg shadow-sm p-4">
+        <h3 className="text-lg font-semibold text-gray-800 mb-2">Important Information</h3>
+        <ul className="text-sm text-gray-600 list-disc pl-5 space-y-1">
+          <li>Coins purchased are for in-game use only</li>
+          <li>Transactions are secured with industry-standard encryption</li>
+          <li>For payment issues, contact our support team</li>
+          <li>All taxes are included in the displayed prices</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
