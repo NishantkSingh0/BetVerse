@@ -101,9 +101,9 @@ export default function GamePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-950">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-8 bg-white p-4 rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-8 bg-gray-900 p-4 rounded-lg shadow-md">
         {/* User Profile */}
         <div className="relative flex items-center space-x-4 sm:pl-4">
           <div
@@ -132,9 +132,9 @@ export default function GamePage() {
             </label>
           </div>
           <div>
-            <div className="hidden sm:block text-base font-bold text-gray-800">{userData.Name}</div>
-            <div className="block sm:hidden text-base font-bold text-gray-800">{userData.Name.split(' ')[0]}</div>
-            <div className="text-sm text-gray-500">Gamer</div>
+            <div className="hidden sm:block text-base font-bold text-gray-200">{userData.Name}</div>
+            <div className="block sm:hidden text-base font-bold text-gray-200">{userData.Name.split(' ')[0]}</div>
+            <div className="text-sm text-gray-400">Gamer</div>
           </div>
           
           {/* Profile Dropdown */}
@@ -188,7 +188,7 @@ export default function GamePage() {
 
       {/* Game Categories Section */}
       <div className='px-6'>
-        <h2 className="text-2xl font-bold text-gray-800 ml-4 mb-1">Game Categories</h2>
+        <h2 className="text-2xl font-bold text-gray-200 ml-4 mb-1">Game Categories</h2>
         <div className='w-44 h-1 border border-blue-700 rounded bg-blue-700 ml-6 mb-6'></div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {categories.map((category, index) => (

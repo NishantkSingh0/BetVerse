@@ -34,7 +34,7 @@ export default function PurchaseCoin() {
 
   const handlePurchase = (price, coins) => {
     console.log(`Processing purchase: ${price} for ${coins} coins`);
-    setUserData(prev => ({...prev,Coins: Number((Number(prev.Coins)+coins)).toFixed(3)}));
+    setUserData(prev => ({...prev,Coins: Number((Number(prev.Coins)+coins)).toFixed(2)}));
   };
 
   return (
