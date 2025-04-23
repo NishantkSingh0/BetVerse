@@ -38,24 +38,24 @@ export default function PurchaseCoin() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen bg-gray-900 p-4">
       {/* Header */}
       <div className="flex items-center mb-6">
         <Link to="/Games" className="mr-4">
-          <ArrowLeft className="w-6 h-6 text-gray-700" />
+          <ArrowLeft className="w-6 h-6 text-gray-300" />
         </Link>
-        <h1 className="text-2xl font-bold text-gray-800">Purchase Coins</h1>
+        <h1 className="text-2xl font-bold text-gray-300">Purchase Coins</h1>
       </div>
 
       {/* Current Balance */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-gray-950 rounded-lg shadow-md p-4 mb-6">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-gray-600 text-sm">Current Balance</p>
+            <p className="text-gray-200 text-sm">Current Balance</p>
             <p className="text-xl font-bold text-yellow-600">💰 {userData?.Coins || 0}</p>
           </div>
           <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">
-            Game Currency
+            Game Currency 💰
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function PurchaseCoin() {
         {coinPackages.map((pkg, index) => (
           <div 
             key={index} 
-            className={`bg-white rounded-xl shadow-md w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
+            className={`bg-gray-950 rounded-xl shadow-md w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
           >
             {pkg.popular && (
               <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
@@ -76,7 +76,7 @@ export default function PurchaseCoin() {
             <div className="flex flex-col justify-between h-full p-6">
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <div className="text-xl md:text-3xl font-bold text-gray-800">{pkg.price}</div>
+                  <div className="text-xl md:text-3xl font-bold text-gray-300">{pkg.price}</div>
                   <div className="text-2xl md:text-4xl font-bold text-yellow-600">💰 {pkg.coins}</div>
                 </div>
                 
@@ -98,9 +98,9 @@ export default function PurchaseCoin() {
       </div>
 
       {/* Information */}
-      <div className="mt-8 bg-white rounded-lg shadow-sm p-4">
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">Important Information</h3>
-        <ul className="text-sm text-gray-600 list-disc pl-5 space-y-1">
+      <div className="mt-8 bg-gray-950 rounded-lg shadow-sm p-4">
+        <h3 className="text-lg font-semibold text-gray-200 mb-2">Important Information</h3>
+        <ul className="text-sm text-gray-300 list-disc pl-5 space-y-1">
           <li>Coins purchased are for in-game use only</li>
           <li>Transactions are secured with industry-standard encryption</li>
           <li>For payment issues, contact our support team</li>
