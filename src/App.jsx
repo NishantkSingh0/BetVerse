@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.jsx'
 import { Toaster } from 'react-hot-toast';
 import LoginPage from './components/LoginPage.jsx'
 import GamePage from './components/GamePage.jsx'
+import RandomGuess from './components/RandomGuess.jsx'
 import PurchaseCoin from './components/PurchaseCoin.jsx'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Games" element={<GamePage />} />
         <Route path="/Purchase" element={<PurchaseCoin />} />
+        <Route path="/Guess" element={<RandomGuess />} />
       </Routes>
     </div>
   )

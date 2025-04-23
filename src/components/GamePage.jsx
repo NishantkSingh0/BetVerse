@@ -10,7 +10,8 @@ const categories = [
   { 
     name: 'Random Games', 
     bgColor: 'bg-gradient-to-b from-purple-500 to-purple-800',
-    icon: '🎮',
+    icon: '🎲',
+    navigate:'/Guess',
     desc:'Bet on random numbers and won upto 700% of your money'
   },
   { 
@@ -131,7 +132,8 @@ export default function GamePage() {
             </label>
           </div>
           <div>
-            <div className="text-base font-bold text-gray-800">{userData.Name}</div>
+            <div className="hidden sm:block text-base font-bold text-gray-800">{userData.Name}</div>
+            <div className="block sm:hidden text-base font-bold text-gray-800">{userData.Name.split(' ')[0]}</div>
             <div className="text-sm text-gray-500">Gamer</div>
           </div>
           
@@ -192,6 +194,7 @@ export default function GamePage() {
           {categories.map((category, index) => (
             <div
               key={index}
+              onClick={() => navigate(category.navigate)}
               className={`h-44 sm:h-48 overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer border-0 ${category.bgColor} bg-opacity-15 hover:bg-opacity-25`}
             >
               <div className="flex flex-col justify-between h-full p-4">

@@ -58,8 +58,8 @@ const LoginPage = () => {
                   className={`w-full sm:px-6 mb-2 sm:p-2 border rounded peer px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600`}
                   value={phone}
                   // onBlur={(e) => {
-                  //   const value=e.target.value;
-                  //   if (!/^\d{10}$/.test(value)) {
+                  //   const phone=e.target.phone;
+                  //   if (!/^\d{10}$/.test(phone)) {
                   //     toast.error("Phone number must be of 10 digits", { duration: 3000, position: "top-right" });
                   //     setIsInvalidMob(true);
                   //     e.target.focus(); 

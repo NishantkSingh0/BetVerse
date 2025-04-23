@@ -4,10 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from './userContext.jsx';
 
 export default function PurchaseCoin() {
-  const { userData } = useUser();
+  const { userData, setUserData } = useUser();
   const navigate = useNavigate();
 
   const coinPackages = [
+    {
+      price: '₹180',
+      coins: 202.87,
+      popular: false
+    },
     {
       price: '₹100',
       coins: 112.75,
@@ -19,7 +24,7 @@ export default function PurchaseCoin() {
     },
     {
       price: '₹64',
-      coins: 68.45
+      coins: 68.49
     },
     {
       price: '₹46',
@@ -28,10 +33,8 @@ export default function PurchaseCoin() {
   ];
 
   const handlePurchase = (price, coins) => {
-    // Here you would implement your payment gateway integration
     console.log(`Processing purchase: ${price} for ${coins} coins`);
-    // After successful payment, navigate back to the game page
-    // navigate('/game');
+    setUserData(prev => ({...prev,Coins: Number((Number(prev.Coins)+coins)).toFixed(3)}));
   };
 
   return (
@@ -62,7 +65,7 @@ export default function PurchaseCoin() {
         {coinPackages.map((pkg, index) => (
           <div 
             key={index} 
-            className={`bg-white rounded-xl shadow-md w-4/5 h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
+            className={`bg-white rounded-xl shadow-md w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
           >
             {pkg.popular && (
               <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
@@ -73,13 +76,13 @@ export default function PurchaseCoin() {
             <div className="flex flex-col justify-between h-full p-6">
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <div className="text-xl font-bold text-gray-800">{pkg.price}</div>
-                  <div className="text-2xl font-bold text-yellow-600">💰 {pkg.coins}</div>
+                  <div className="text-xl md:text-3xl font-bold text-gray-800">{pkg.price}</div>
+                  <div className="text-2xl md:text-4xl font-bold text-yellow-600">💰 {pkg.coins}</div>
                 </div>
                 
-                <div className="text-sm text-gray-500 mb-6">
+                {/* <div className="text-sm text-gray-500 mb-6">
                   Buy game coins to participate in various games and win exciting rewards!
-                </div>
+                </div> */}
               </div>
               
               <button 

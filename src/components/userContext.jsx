@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
     Name: "",
     Coins: "20.00",
     Enrolled: [],
+    Password:"",
     img: ""
   });
 
