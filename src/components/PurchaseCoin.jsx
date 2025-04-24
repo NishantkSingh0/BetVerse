@@ -9,9 +9,13 @@ export default function PurchaseCoin() {
 
   const coinPackages = [
     {
+      price: '₹360',
+      coins: 424.86,
+      premium: true
+    },
+    {
       price: '₹180',
-      coins: 202.87,
-      popular: false
+      coins: 204.22
     },
     {
       price: '₹100',
@@ -20,15 +24,15 @@ export default function PurchaseCoin() {
     },
     {
       price: '₹80',
-      coins: 85.65
+      coins: 86.94
     },
     {
       price: '₹64',
       coins: 68.49
     },
     {
-      price: '₹46',
-      coins: 48.82
+      price: '₹45',
+      coins: 47.46
     }
   ];
 
@@ -65,11 +69,17 @@ export default function PurchaseCoin() {
         {coinPackages.map((pkg, index) => (
           <div 
             key={index} 
-            className={`bg-gray-950 rounded-xl shadow-md w-full sm:w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
+            className={`bg-gray-950 rounded-xl shadow-md w-full sm:w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : pkg.premium?'border-2 border-amber-500':''}`}
           >
             {pkg.popular && (
               <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
                 POPULAR
+              </div>
+            )}
+            
+            {pkg.premium && (
+              <div className="absolute top-0 right-0 bg-amber-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
+                PREMIUM
               </div>
             )}
             
@@ -87,7 +97,7 @@ export default function PurchaseCoin() {
               
               <button 
                 onClick={() => handlePurchase(pkg.price, pkg.coins)}
-                className={`w-full py-3 rounded-lg font-medium text-white ${pkg.popular ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} transition-colors flex items-center justify-center`}
+                className={`w-full py-3 rounded-lg font-medium text-white ${pkg.popular ? 'bg-blue-600 hover:bg-blue-700' : pkg.premium?'bg-amber-600 hover:bg-amber-700':'bg-green-600 hover:bg-green-700'} transition-colors flex items-center justify-center`}
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Purchase Now
