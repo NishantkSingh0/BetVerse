@@ -14,7 +14,7 @@ const HomePage = () => {
           loop
           muted
         >
-          <source src="/stadium.mp4" type="video/mp4" />
+          {/* <source src="/stadium.mp4" type="video/mp4" /> */}
         </video>
         <h1 className="text-3xl sm:text-6xl font-bold mb-4">
           🏆 Bet Smart. Win Big.
