@@ -6,8 +6,8 @@ const RandomGuess = () => {
   // Mock user data - in a real application, this would come from props or context
   const { userData, setUserData } = useUser();
 
-  const [selectedNumber, setSelectedNumber] = useState(null);
-  const selectedNumberRef = useRef(null);
+  const [selectedNumbers, setSelectedNumbers] = useState([]);
+  const selectedNumbersRef = useRef([]);
   const [numberSelections, setNumberSelections] = useState(Array(10).fill(0));
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [showingResults, setShowingResults] = useState(false);
@@ -16,24 +16,25 @@ const RandomGuess = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [pendingSelection, setPendingSelection] = useState(null);
-  const hasProcessedResultRef = useRef(false); // Changed to useRef for more reliable tracking
-  const [winAmount, setWinAmount] = useState(0); // Track winning amount for display
+  const hasProcessedResultRef = useRef(false);
+  const [winAmount, setWinAmount] = useState(0);
+  const [betAmount, setBetAmount] = useState(10);
   
   // Constants for timing
   const GAME_DURATION = 120; // 2 minutes in seconds
   const RESULT_DURATION = 30; // 30 seconds
   const CYCLE_DURATION = GAME_DURATION + RESULT_DURATION; // 150 seconds total
-  const BET_AMOUNT = 10; // Amount deducted per selection
+  const MAX_SELECTIONS = 3; // Maximum number of selections allowed
 
-  // Update the ref whenever selectedNumber changes
+  // Update the ref whenever selectedNumbers changes
   useEffect(() => {
-    selectedNumberRef.current = selectedNumber;
-  }, [selectedNumber]);
+    selectedNumbersRef.current = selectedNumbers;
+  }, [selectedNumbers]);
 
   // Debug logging for result and selection
   useEffect(() => {
-    if (result && selectedNumberRef.current !== null) {
-      console.log("DEBUG - Selected:", selectedNumberRef.current, "Results:", result);
+    if (result && selectedNumbersRef.current.length > 0) {
+      console.log("DEBUG - Selected:", selectedNumbersRef.current, "Results:", result);
       console.log("hasProcessedResult:", hasProcessedResultRef.current);
     }
   }, [result]);
@@ -68,7 +69,7 @@ const RandomGuess = () => {
         
         // Generate results if we just entered results phase
         if (!showingResults) {
-          console.log("Entering results phase, selection:", selectedNumberRef.current);
+          console.log("Entering results phase, selections:", selectedNumbersRef.current);
           setShowingResults(true);
           hasProcessedResultRef.current = false; // Reset the flag when entering result phase
           generateResults();
@@ -82,7 +83,7 @@ const RandomGuess = () => {
         if (showingResults) {
           console.log("Entering game phase, resetting");
           setShowingResults(false);
-          setSelectedNumber(null);
+          setSelectedNumbers([]);
           setNumberSelections(Array(10).fill(0));
           setWinAmount(0);
           // Don't reset hasProcessedResultRef here, only set it to true in generateResults
@@ -104,11 +105,11 @@ const RandomGuess = () => {
   }, [showingResults, roundCount]);
 
   const generateResults = () => {
-    const selectedNumber = selectedNumberRef.current;
+    const selectedNumbers = selectedNumbersRef.current;
     const allNumbers = Array.from({ length: 10 }, (_, i) => i); // [0, 1, ..., 9]
   
-    // Assign weights: lower for selectedNumber, higher and uniform for others
-    const weights = allNumbers.map(num => (num === selectedNumber ? 1 : 10));
+    // Assign weights: lower for selectedNumbers, higher and uniform for others
+    const weights = allNumbers.map(num => (selectedNumbers.includes(num) ? 1 : 10));
   
     // Helper to pick unique numbers based on weights
     const weightedRandomSample = (nums, weights, count) => {
@@ -135,55 +136,60 @@ const RandomGuess = () => {
     const resultObj = { first, second, third };
     setResult(resultObj);
   
-    console.log("GENERATE RESULTS - Selected Number:", selectedNumber, "Result:", resultObj);
+    console.log("GENERATE RESULTS - Selected Numbers:", selectedNumbers, "Result:", resultObj);
   
     processResults(resultObj);
   };
   
-
   const processResults = (resultObj) => {
-    // Make sure we only process once and have a valid selection
-    if (hasProcessedResultRef.current || selectedNumberRef.current === null) {
-      console.log("Skipping result processing - already processed or no selection");
+    // Make sure we only process once and have valid selections
+    if (hasProcessedResultRef.current || selectedNumbersRef.current.length === 0) {
+      console.log("Skipping result processing - already processed or no selections");
       return;
     }
 
     const { first, second, third } = resultObj;
-    const selectedNum = selectedNumberRef.current;
+    const selectedNums = selectedNumbersRef.current;
     
     // Force numbers for comparison to ensure accurate matching
-    const selectedNumAsInt = parseInt(selectedNum, 10);
     const firstAsInt = parseInt(first, 10);
     const secondAsInt = parseInt(second, 10);
     const thirdAsInt = parseInt(third, 10);
     
     console.log("Processing results", {
-      selected: selectedNumAsInt,
+      selected: selectedNums,
       first: firstAsInt,
       second: secondAsInt,
       third: thirdAsInt
     });
 
-    let amount = 0;
+    let totalWinAmount = 0;
     
-    // Check if user won and calculate amount
-    if (selectedNumAsInt === firstAsInt) {
-      amount = 80;
-      console.log("First prize match! Adding 80 coins");
-    } else if (selectedNumAsInt === secondAsInt) {
-      amount = 50;
-      console.log("Second prize match! Adding 50 coins");
-    } else if (selectedNumAsInt === thirdAsInt) {
-      amount = 30;
-      console.log("Third prize match! Adding 30 coins");
-    }
+    // Check for each selected number if user won and calculate amount
+    selectedNums.forEach(num => {
+      const selectedNumAsInt = parseInt(num, 10);
+      
+      if (selectedNumAsInt === firstAsInt) {
+        const winnings = betAmount * 8; // 700% hike + original bet
+        totalWinAmount += winnings;
+        console.log(`First prize match for ${selectedNumAsInt}! Adding ${winnings} coins`);
+      } else if (selectedNumAsInt === secondAsInt) {
+        const winnings = betAmount * 5; // 400% hike + original bet
+        totalWinAmount += winnings;
+        console.log(`Second prize match for ${selectedNumAsInt}! Adding ${winnings} coins`);
+      } else if (selectedNumAsInt === thirdAsInt) {
+        const winnings = betAmount * 3; // 200% hike + original bet
+        totalWinAmount += winnings;
+        console.log(`Third prize match for ${selectedNumAsInt}! Adding ${winnings} coins`);
+      }
+    });
     
     // Update coins if the user won something
-    if (amount > 0) {
-      console.log("User won", amount, "coins");
-      setWinAmount(amount);
+    if (totalWinAmount > 0) {
+      console.log("User won", totalWinAmount, "coins");
+      setWinAmount(totalWinAmount);
       setUserData(prev => {
-        const newCoins = Number((Number(prev.Coins) + amount).toFixed(2));
+        const newCoins = Number((Number(prev.Coins) + totalWinAmount).toFixed(2));
         console.log("Updating user coins from", prev.Coins, "to", newCoins);
         return {
           ...prev,
@@ -191,31 +197,59 @@ const RandomGuess = () => {
         };
       });
     } else {
-      console.log("User did not win with number", selectedNumAsInt);
+      console.log("User did not win with numbers", selectedNums);
     }
     
     // Mark as processed to prevent multiple updates
     hasProcessedResultRef.current = true;
   };
-  
 
   const handleNumberClick = (num) => {
-    if (!showingResults && userData.Coins >= BET_AMOUNT) {
+    if (showingResults) return;
+    
+    const totalCost = betAmount * (selectedNumbers.includes(num) ? selectedNumbers.length - 1 : selectedNumbers.length + 1);
+    
+    if (selectedNumbers.includes(num)) {
+      // If number is already selected, deselect it
+      setSelectedNumbers(prev => prev.filter(n => n !== num));
+      const newSelections = [...numberSelections];
+      newSelections[num] -= 1;
+      setNumberSelections(newSelections);
+      
+      // Refund the bet amount for this number
+      setUserData(prev => {
+        const newCoins = Number((Number(prev.Coins) + betAmount).toFixed(2));
+        return {...prev, Coins: newCoins};
+      });
+    } else {
+      // Check if user can afford another bet
+      if (userData.Coins < betAmount) {
+        toast.error(`Not enough coins! You need at least ${betAmount} coins to place this bet.`, {
+          duration: 3000,
+          position: "top-right",
+        });
+        return;
+      }
+      
+      // Check if max selections reached
+      if (selectedNumbers.length >= MAX_SELECTIONS) {
+        toast.error(`Maximum ${MAX_SELECTIONS} numbers can be selected!`, {
+          duration: 3000,
+          position: "top-right",
+        });
+        return;
+      }
+      
+      // Add number to selections
       setPendingSelection(num);
       setShowConfirmation(true);
-    } else if (userData.Coins < BET_AMOUNT) {
-      toast.error("Not enough coins! You need at least 10 coins to play.", {
-        duration: 3000,
-        position: "top-right",
-      });
-      // alert("Not enough coins! You need at least 10 coins to play.");
     }
   };
 
   const confirmSelection = () => {
-    // Update the selected number
-    setSelectedNumber(pendingSelection);
-    selectedNumberRef.current = pendingSelection; // Update the ref immediately
+    // Update the selected numbers
+    setSelectedNumbers(prev => [...prev, pendingSelection]);
+    selectedNumbersRef.current = [...selectedNumbersRef.current, pendingSelection]; // Update the ref immediately
     
     // Update the number selections count
     const newSelections = [...numberSelections];
@@ -224,7 +258,7 @@ const RandomGuess = () => {
     
     // Deduct coins from user balance
     setUserData(prev => {
-      const newCoins = Number((Number(prev.Coins) - BET_AMOUNT).toFixed(2));
+      const newCoins = Number((Number(prev.Coins) - betAmount).toFixed(2));
       console.log("Deducting bet amount. Coins from", prev.Coins, "to", newCoins);
       return {...prev, Coins: newCoins};
     });
@@ -239,85 +273,73 @@ const RandomGuess = () => {
     setShowConfirmation(false);
   };
 
+  const handleBetAmountChange = (e) => {
+    // if (userData.Coins>=betAmount * selectedNumbers.length){
+    //   toast.error(`Not enough coins! Recharge first`, {duration: 3000,position: "top-right",})
+    //   return;
+    // }
+    setBetAmount(parseInt(e.target.value, 10));
+  };
+
   const formatTime = (time) => {
     const m = String(Math.floor(time / 60)).padStart(2, '0');
     const s = String(time % 60).padStart(2, '0');
     return `${m}:${s}`;
   };
 
-  const formatCurrentTime = (date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-  };
-
-  // Calculate next round start time for display
-  const getNextRoundTime = () => {
-    const now = new Date(currentTime);
-    const secondsToday = 
-      now.getHours() * 3600 + 
-      now.getMinutes() * 60 + 
-      now.getSeconds();
-    
-    const secondsUntilNextCycle = CYCLE_DURATION - (secondsToday % CYCLE_DURATION);
-    const nextRoundTime = new Date(now.getTime() + secondsUntilNextCycle * 1000);
-    
-    return nextRoundTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-  };
-
-  // Calculate current round's start and end times
-  const getCurrentRoundTimes = () => {
-    const now = new Date(currentTime);
-    const secondsToday = 
-      now.getHours() * 3600 + 
-      now.getMinutes() * 60 + 
-      now.getSeconds();
-    
-    const secondsInCurrentCycle = secondsToday % CYCLE_DURATION;
-    
-    // Calculate start time of current round
-    const roundStartTime = new Date(now.getTime() - secondsInCurrentCycle * 1000);
-    const roundEndTime = new Date(roundStartTime.getTime() + GAME_DURATION * 1000);
-    
-    const formatTimeOnly = (date) => {
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-    };
-    
-    return {
-      start: formatTimeOnly(roundStartTime),
-      end: formatTimeOnly(roundEndTime)
-    };
-  };
-
-  const roundTimes = getCurrentRoundTimes();
-
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col items-center px-4 py-6 relative">
-      <h1 className="text-4xl font-bold mb-12 text-center">🎲 Random Guess</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">🎲 Random Guess</h1>
       
-      {!showingResults && <div className="bg-gray-950 rounded-xl shadow p-4 md:p-6 w-full  mb-6">
+      {!showingResults && <div className="bg-gray-950 rounded-xl shadow p-4 md:p-6 w-full mb-6">
         <div className="flex justify-between items-center mb-3">
           <p className="text-lg md:text-xl font-medium text-gray-200">📢 Use Case:</p>
           <p className="text-lg font-bold text-yellow-600">Your balance: {userData.Coins}💰</p>
         </div>
         <p className="text-sm md:text-base text-gray-200 leading-relaxed">
-          You have to invest <span className="font-bold text-yellow-600">10💰</span> on any number you trust. and wait 2min for more participants to join.
+          Choose up to <span className="font-bold text-blue-400">3 numbers</span> and set your bet amount. 
+          Wait 2min for more participants to join.
           After that, our system will randomly select 3 numbers:
           <br />
-          🥇 First prize goes to <span className="text-green-600 font-bold">700% hiked (80💰)</span><br />
-          🥈 Second prize goes to <span className="text-green-600/90 font-bold">400% hiked (50💰)</span><br />
-          🥉 Third prize goes to <span className="text-green-600/85 font-bold">200% hiked (30💰)</span>
+          🥇 First prize goes to <span className="text-green-600 font-bold">700% hiked ({betAmount * 8}💰)</span><br />
+          🥈 Second prize goes to <span className="text-green-600/90 font-bold">400% hiked ({betAmount * 5}💰)</span><br />
+          🥉 Third prize goes to <span className="text-green-600/85 font-bold">200% hiked ({betAmount * 3}💰)</span>
         </p>
       </div>}
 
       {!showingResults ? (
         <>
-          <div className="mb-4 text-lg font-semibold">Choose a number between 0 to 9</div>
+          {/* Bet Amount Slider */}
+          <div className="bg-gray-800 rounded-xl p-4 w-full max-w-2xl mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-lg font-semibold">Adjust bet Amount:</h3>
+              <span className="font-bold text-yellow-500">{betAmount}💰</span>
+            </div>
+            <input
+              type="range"
+              min="10"
+              max="100"
+              step="5"
+              value={betAmount}
+              onChange={handleBetAmountChange}
+              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            />
+            <div className="flex justify-between text-xs mt-1">
+              {/* <span>Min: 10💰</span>
+              <span>Max: 100💰</span> */}
+            </div>
+          </div>
+          
+          <div className="mb-4 text-lg font-semibold">
+           {/*Choose up to {MAX_SELECTIONS} numbers   (Selected: {selectedNumbers.length}/{MAX_SELECTIONS}) */}
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-6 w-full max-w-2xl">
             {[...Array(10)].map((_, i) => (
               <div
                 key={i}
                 onClick={() => handleNumberClick(i)}
                 className={`${
-                  selectedNumber === i ? 'bg-blue-700 border-2 border-blue-500' : 'bg-slate-700 hover:bg-slate-800'
+                  selectedNumbers.includes(i) ? 'bg-blue-700 border-2 border-blue-500' : 'bg-slate-700 hover:bg-slate-800'
                 } text-2xl md:text-4xl font-bold text-center p-6 md:p-8 rounded-xl shadow-lg transition cursor-pointer`}
               >
                 {i}
@@ -328,29 +350,33 @@ const RandomGuess = () => {
           <div className="text-lg font-semibold mb-2 text-blue-500">
             ⏳ Time left: {formatTime(timeRemaining)}
           </div>
-          {selectedNumber !== null && (
-            <p className="text-sm text-gray-400">You selected: <span className="font-semibold">{selectedNumber}</span></p>
+          {selectedNumbers.length > 0 && (
+            <div className="text-sm text-gray-400 flex justify-between items-center gap-2">
+              <p>Your selections: <span className="font-semibold">{selectedNumbers.join(', ')}</span></p> <p className='font-extrabold'>|</p>
+              <p>Total bet: <span className="font-semibold text-yellow-500">{betAmount * selectedNumbers.length}💰</span></p>
+            </div>
           )}
         </>
       ) : (
-        <div className="text-center bg-gray-950 p-6 rounded-xl shadow max-w-xl w-full">
+        <div className="text-center bg-gray-950 p-6 mt-20 rounded-xl shadow max-w-xl w-full">
           <h2 className="text-2xl font-bold text-green-600 mb-4">🎉 Round {roundCount} Results!</h2>
           <p className="text-lg font-medium mb-2">The 3 random numbers selected are:</p>
           <div className="mt-4 space-y-2 text-xl">
-            <div>🥇 First Prize for num <span className="font-bold">{result?.first ?? 'N/A'}</span></div>
-            <div>🥈 Second Prize for num <span className="font-bold">{result?.second ?? 'N/A'}</span></div>
-            <div>🥉 Third Prize for num <span className="font-bold">{result?.third ?? 'N/A'}</span></div>
+            <div>🥇 First Prize for number <span className="font-bold">{result?.first ?? 'N/A'}</span></div>
+            <div>🥈 Second Prize for number <span className="font-bold">{result?.second ?? 'N/A'}</span></div>
+            <div>🥉 Third Prize for number <span className="font-bold">{result?.third ?? 'N/A'}</span></div>
           </div>
           
           {/* Display what the user selected */}
-          {selectedNumberRef.current !== null && (
+          {selectedNumbersRef.current.length > 0 && (
             <div className="mt-4 p-3 bg-blue-950 rounded-lg">
-              <p>Your selection: <span className="font-bold">{selectedNumberRef.current}</span></p>
+              <p>Your selections: <span className="font-bold">{selectedNumbersRef.current.join(', ')}</span></p>
+              {/* <p>Bet per number: <span className="font-bold text-yellow-500">{betAmount}💰</span></p> */}
               {winAmount > 0 ? 
                 (<p className="text-green-600 font-bold mt-1">
                   You won {winAmount}💰!
                 </p>):(<p className="text-red-400 font-bold mt-1">
-                  You lossed!
+                  Better luck next time!
                 </p>)
               }
             </div>
@@ -358,7 +384,6 @@ const RandomGuess = () => {
           
           <div className="mt-6 text-gray-600">
             <p>Next round starts in: <span className="font-bold">{formatTime(timeRemaining)}</span></p>
-            <p className="text-sm mt-1">Next round starts at: {getNextRoundTime()}</p>
           </div>
         </div>
       )}
@@ -367,13 +392,13 @@ const RandomGuess = () => {
       {showConfirmation && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-gray-700 rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-xl font-bold mb-4">Confirm Your Selection</h3>
-            <p className="mb-4">Are you sure you want to select number <span className="font-bold">{pendingSelection}</span>?</p>
+            <h3 className="text-xl font-bold mb-4">Confirm Selection</h3>
+            <p className="mb-4">You want to bet <span className="font-bold text-yellow-500">{betAmount}💰</span> on number <span className="font-bold">{pendingSelection}</span>?</p>
             <div className="bg-gray-800 border border-yellow-200 rounded-lg p-4 mb-6">
               <p className="font-medium">Balance Change:</p>
               <p className="text-lg">
-                {userData.Coins} 💰 → {Number((Number(userData.Coins) - BET_AMOUNT).toFixed(2))} 💰
-                <span className="text-red-500 ml-2">(-{BET_AMOUNT})</span>
+                {userData.Coins}💰 → {Number((Number(userData.Coins) - betAmount).toFixed(2))}💰
+                <span className="text-red-500 ml-2">(-{betAmount})</span>
               </p>
             </div>
             <div className="flex space-x-3 justify-end">

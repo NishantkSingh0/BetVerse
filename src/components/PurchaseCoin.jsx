@@ -65,7 +65,7 @@ export default function PurchaseCoin() {
         {coinPackages.map((pkg, index) => (
           <div 
             key={index} 
-            className={`bg-gray-950 rounded-xl shadow-md w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
+            className={`bg-gray-950 rounded-xl shadow-md w-full sm:w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : ''}`}
           >
             {pkg.popular && (
               <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">

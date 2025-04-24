@@ -103,7 +103,7 @@ export default function GamePage() {
   return (
     <div className="min-h-screen bg-gray-950">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-8 bg-gray-900 p-4 rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-8 bg-gray-900 p-4 shadow-md">
         {/* User Profile */}
         <div className="relative flex items-center space-x-4 sm:pl-4">
           <div
