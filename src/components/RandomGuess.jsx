@@ -274,10 +274,10 @@ const RandomGuess = () => {
   };
 
   const handleBetAmountChange = (e) => {
-    // if (userData.Coins>=betAmount * selectedNumbers.length){
-    //   toast.error(`Not enough coins! Recharge first`, {duration: 3000,position: "top-right",})
-    //   return;
-    // }
+    if (userData.Coins>=betAmount * selectedNumbers.length){
+      toast.error(`Not enough coins! Recharge first`, {duration: 3000,position: "top-right",})
+      return;
+    }
     setBetAmount(parseInt(e.target.value, 10));
   };
 
