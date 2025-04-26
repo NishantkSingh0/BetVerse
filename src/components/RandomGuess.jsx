@@ -294,27 +294,28 @@ const RandomGuess = () => {
       {!showingResults && <div className="bg-gray-950 rounded-xl shadow p-4 md:p-6 w-full mb-6">
         <div className="flex justify-between items-center mb-3">
           <p className="text-lg md:text-xl font-medium text-gray-200">📢 Use Case:</p>
-          <p className="text-lg font-bold text-yellow-600">Your balance: {userData.Coins}💰</p>
+          <p className="hidden sm:block text-lg font-bold text-yellow-600">balance: {userData.Coins}💰</p>
+          <p className="block sm:hidden text-lg font-bold text-yellow-600">{userData.Coins}💰</p>
         </div>
         <p className="text-sm md:text-base text-gray-200 leading-relaxed">
           Choose up to <span className="font-bold text-blue-400">3 numbers</span> and set your bet amount. 
           Wait 2min for more participants to join.
           After that, our system will randomly select 3 numbers:
           <br />
-          🥇 First prize goes to <span className="text-green-600 font-bold">700% hiked ({betAmount * 8}💰)</span><br />
-          🥈 Second prize goes to <span className="text-green-600/90 font-bold">400% hiked ({betAmount * 5}💰)</span><br />
-          🥉 Third prize goes to <span className="text-green-600/85 font-bold">200% hiked ({betAmount * 3}💰)</span>
+          🥇 First prize goes to <span className="text-green-600 font-bold">700% hiked (<span className='text-yellow-600 font-bold'>{`${betAmount} -> ${betAmount * 8}`}💰</span>)</span><br />
+          🥈 Second prize goes to <span className="text-green-600/90 font-bold">400% hiked (<span className='text-yellow-600 font-bold'>{`${betAmount} -> ${betAmount * 5}`}💰</span>)</span><br />
+          🥉 Third prize goes to <span className="text-green-600/85 font-bold">200% hiked (<span className='text-yellow-600 font-bold'>{`${betAmount} -> ${betAmount * 3}`}💰</span>)</span>
         </p>
       </div>}
 
       {!showingResults ? (
         <>
           {/* Bet Amount Slider */}
-          <div className="bg-gray-800 rounded-xl p-4 w-full max-w-2xl mb-6">
-            <div className="flex justify-between items-center mb-2">
+          <div className="bg-gray-800 rounded-xl flex justify-between p-4 w-full max-w-[700px] mb-6">
+            {/* <div className="flex justify-between items-center mb-2">
               <h3 className="text-lg font-semibold">Adjust bet Amount:</h3>
               <span className="font-bold text-yellow-500">{betAmount}💰</span>
-            </div>
+            </div> */}
             <input
               type="range"
               min="10"
@@ -322,16 +323,12 @@ const RandomGuess = () => {
               step="5"
               value={betAmount}
               onChange={handleBetAmountChange}
-              className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+              className="w-[85%] sm:w-[90%] h-2 mt-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
             />
-            <div className="flex justify-between text-xs mt-1">
-              {/* <span>Min: 10💰</span>
-              <span>Max: 100💰</span> */}
-            </div>
+            <span className="font-bold ml-2 text-yellow-500">{betAmount}💰</span>
           </div>
           
           <div className="mb-4 text-lg font-semibold">
-           {/*Choose up to {MAX_SELECTIONS} numbers   (Selected: {selectedNumbers.length}/{MAX_SELECTIONS}) */}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-6 w-full max-w-2xl">
             {[...Array(10)].map((_, i) => (

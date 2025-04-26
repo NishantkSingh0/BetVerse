@@ -6,12 +6,13 @@ import LoginPage from './components/LoginPage.jsx'
 import GamePage from './components/GamePage.jsx'
 import RandomGuess from './components/RandomGuess.jsx'
 import PurchaseCoin from './components/PurchaseCoin.jsx'
+import Practice from './components/Practice.jsx'
 
 function App() {
 
   return (
     // <>
-    //    <HomePage/>
+    //    <Practice/>
     // </>
     <div>
       <Toaster position="top-right" reverseOrder={false} />
