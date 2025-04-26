@@ -8,7 +8,8 @@ export const UserProvider = ({ children }) => {
     Coins: "20.00",
     Enrolled: [],
     Password:"",
-    img: ""
+    img: "",
+    randomGuess:[]
   });
 
   return (

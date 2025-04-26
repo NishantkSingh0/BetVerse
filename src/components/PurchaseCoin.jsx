@@ -5,7 +5,6 @@ import { useUser } from './userContext.jsx';
 
 export default function PurchaseCoin() {
   const { userData, setUserData } = useUser();
-  const navigate = useNavigate();
 
   const coinPackages = [
     {
@@ -37,7 +36,6 @@ export default function PurchaseCoin() {
   ];
 
   const handlePurchase = (price, coins) => {
-    console.log(`Processing purchase: ${price} for ${coins} coins`);
     setUserData(prev => ({...prev,Coins: Number((Number(prev.Coins)+coins)).toFixed(2)}));
   };
 
