@@ -139,7 +139,7 @@ export default function GamePage() {
           
           {/* Profile Dropdown */}
           {showProfileMenu && (
-            <div className="absolute z-10 top-14 left-0 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+            <div className="absolute z-10 top-14 left-0 w-48 bg-gray-700 rounded-lg shadow-lg border border-gray-500 py-2">
             {/* Hidden File Input */}
             <input
               type="file"
@@ -149,9 +149,9 @@ export default function GamePage() {
               onChange={handleImageUpload}
             />
 
-            <div className="flex justify-between items-center px-4 pb-2 border-b border-gray-200">
+            <div className="flex justify-between items-center text-amber-200/90 px-4 pb-2 border-b border-gray-500">
               <h3 className="font-medium">{userData.Name}</h3>
-              <button onClick={toggleProfileMenu} className="text-gray-500 hover:text-gray-700">
+              <button onClick={toggleProfileMenu} className="text-gray-200 hover:text-gray-300">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -159,13 +159,13 @@ export default function GamePage() {
             <div className="pt-2">
               <button
                 onClick={handleEditProfile}
-                className="w-full text-left px-4 py-2 flex items-center text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                className="w-full text-left text-slate-200 px-4 py-2 flex items-center cursor-pointer hover:bg-blue-500"
               >
                 <Pencil className="w-4 h-4 mr-2" /> Edit Profile
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 flex items-center text-red-600 hover:bg-red-50"
+                className="w-full text-left px-4 py-2 flex items-center text-red-600 cursor-pointer hover:bg-red-50"
               >
                 <LogOut className="w-4 h-4 mr-2" /> Log Out
               </button>

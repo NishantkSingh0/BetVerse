@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, ShoppingCart } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useUser } from './userContext.jsx';
 
 export default function PurchaseCoin() {
@@ -9,16 +9,16 @@ export default function PurchaseCoin() {
   const coinPackages = [
     {
       price: '₹360',
-      coins: 424.86,
+      coins: 413.86,
       premium: true
     },
     {
       price: '₹180',
-      coins: 204.22
+      coins: 201.22
     },
     {
       price: '₹100',
-      coins: 112.75,
+      coins: 110.75,
       popular: true
     },
     {
@@ -43,8 +43,8 @@ export default function PurchaseCoin() {
     <div className="min-h-screen bg-gray-900 p-4">
       {/* Header */}
       <div className="flex items-center mb-6">
-        <Link to="/Games" className="mr-4">
-          <ArrowLeft className="w-6 h-6 text-gray-300" />
+        <Link to="/Games" className="mr-4 mt-1">
+          <ArrowLeft className="w-8 h-8 sm:h-10 text-gray-300 transform transition-transform duration-100 hover:scale-110" />
         </Link>
         <h1 className="text-2xl font-bold text-gray-300">Purchase Coins</h1>
       </div>
@@ -67,7 +67,7 @@ export default function PurchaseCoin() {
         {coinPackages.map((pkg, index) => (
           <div 
             key={index} 
-            className={`bg-gray-950 rounded-xl shadow-md w-full sm:w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : pkg.premium?'border-2 border-amber-500':''}`}
+            className={`bg-gray-950 rounded-xl shadow-md w-full md:w-4/5 h-44 sm:h-52 mx-auto relative overflow-hidden ${pkg.popular ? 'border-2 border-blue-500' : pkg.premium?'border-2 border-amber-500':''}`}
           >
             {pkg.popular && (
               <div className="absolute top-0 right-0 bg-blue-500 text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
@@ -109,10 +109,10 @@ export default function PurchaseCoin() {
       <div className="mt-8 bg-gray-950 rounded-lg shadow-sm p-4">
         <h3 className="text-lg font-semibold text-gray-200 mb-2">Important Information</h3>
         <ul className="text-sm text-gray-300 list-disc pl-5 space-y-1">
-          <li>Coins purchased are for in-game use only</li>
-          <li>Transactions are secured with industry-standard encryption</li>
-          <li>For payment issues, contact our support team</li>
-          <li>All taxes are included in the displayed prices</li>
+          <li>Coins purchased are for in-game use only.</li>
+          <li>Transactions are secured with RazorPay, PayTm & CashFree.</li>
+          <li>For payment issues, <a href="mailto:nishantksingh.talk@gmail.com" className='text-blue-400 underline'>mail</a> us with your problem and attached proof's.</li>
+          <li>All taxes are included in the displayed prices.</li>
         </ul>
       </div>
     </div>

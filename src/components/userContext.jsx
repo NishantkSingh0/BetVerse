@@ -5,11 +5,11 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({
     Name: "",
-    Coins: "20.00",
+    Coins: "200.00",
     Enrolled: [],
     Password:"",
     img: "",
-    randomGuess:[]
+    randomGuess: { list: [], betAmount: "10" }
   });
 
   return (
