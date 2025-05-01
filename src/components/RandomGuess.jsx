@@ -219,24 +219,30 @@ const RandomGuess = () => {
     const totalCost = userData.randomGuess.betAmount * (userData?.randomGuess.list.includes(num) ?  userData?.randomGuess.list.length - 1 :  userData?.randomGuess.list.length + 1);
     
     if ( userData?.randomGuess.list.includes(num)) {
-      // If number is already selected, deselect it
-      setUserData(prev => ({
-        ...prev,
-        randomGuess: {
-          ...prev.randomGuess,
-          list: prev.randomGuess.list.filter(n => n !== num)
-        }
-      }));
-      
-      const newSelections = [...numberSelections];
-      newSelections[num] -= 1;
-      setNumberSelections(newSelections);
-      
-      // Refund the bet amount for this number
-      setUserData(prev => {
-        const newCoins = Number((Number(prev.Coins) + userData.randomGuess.betAmount).toFixed(2));
-        return {...prev, Coins: newCoins};
+      toast.success('The number is already selected. ', {
+        duration: 3000,
+        position: "top-right",
       });
+      return
+      // // If number is already selected, deselect it
+      // setUserData(prev => ({
+      //   ...prev,
+      //   randomGuess: {
+      //     ...prev.randomGuess,
+      //     list: prev.randomGuess.list.filter(n => n !== num)
+      //   }
+      // }));
+      
+      // const newSelections = [...numberSelections];
+      // newSelections[num] -= 1;
+      // setNumberSelections(newSelections);
+      
+      // // Refund the bet amount for this number
+      // setUserData(prev => {
+      //   const newCoins = Number((Number(prev.Coins) + userData.randomGuess.betAmount).toFixed(2));
+      //   console.log(`${(Number(prev.Coins))}+${userData.randomGuess.betAmount}=${newCoins}`)
+      //   return {...prev, Coins: newCoins};
+      // });
     } else {
       // Check if user can afford another bet
       if (userData.Coins < userData.randomGuess.betAmount || Number((Number(userData.Coins) - userData.randomGuess.betAmount*(userData.randomGuess.list.length+1)).toFixed(2))<0) {

@@ -1,0 +1,13 @@
+.Container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Circle {
+  box-shadow: inset 0px 2px 5px 0px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,35 @@
+.Container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.Die {
+  border-radius: 20%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  padding: 7%;
+  box-shadow: 0 0 5px;
+  cursor: pointer;
+}
+
+.Disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.Dot {
+  width: 30%;
+  height: 30%;
+  background-color: inherit;
+  box-shadow: inset 0 0 5px;
+  border-radius: 50%;
+}
+
+.Invisible {
+  box-shadow: none;
+}

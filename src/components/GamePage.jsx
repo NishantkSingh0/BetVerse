@@ -30,12 +30,14 @@ const categories = [
     name: 'Time-Pass', 
     bgColor: 'bg-gradient-to-b from-green-500 to-green-800',
     icon: '⏳',
+    navigate:"/LUDO",
     desc:'Play some timepass games with each other'
   },
   { 
     name: 'Cricket', 
     bgColor: 'bg-gradient-to-b from-orange-500 to-orange-800',
     icon: '🏏',
+    navigate:'/Crick',
     desc:'Predict cricket scores and make your money 700% hiked'
   }
 ];
