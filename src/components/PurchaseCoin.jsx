@@ -9,28 +9,28 @@ export default function PurchaseCoin() {
   const coinPackages = [
     {
       price: '₹360',
-      coins: 413.86,
+      coins: 413.86,  // 1.1472
       premium: true
     },
     {
-      price: '₹180',
+      price: '₹180',  // 1.1179
       coins: 201.22
     },
     {
       price: '₹100',
-      coins: 110.75,
+      coins: 110.75,  // 1.1075
       popular: true
     },
     {
-      price: '₹80',
+      price: '₹80',   // 1.08675
       coins: 86.94
     },
     {
-      price: '₹64',
+      price: '₹64',   // 1.07015
       coins: 68.49
     },
     {
-      price: '₹45',
+      price: '₹45',   // 1.0547
       coins: 47.46
     }
   ];

@@ -7,9 +7,7 @@ import GamePage from './components/GamePage.jsx'
 import RandomGuess from './components/RandomGuess.jsx'
 import PurchaseCoin from './components/PurchaseCoin.jsx'
 // import Practice from './components/Practice.jsx'
-// import LUDO from './components/LUDO.jsx'
 import Cricket from './components/Cricket.jsx'
-import LudoGame from "./components/LUDO/index.tsx";
 
 function App() {
 
@@ -25,7 +23,7 @@ function App() {
         <Route path="/Games" element={<GamePage />} />
         <Route path="/Purchase" element={<PurchaseCoin />} />
         <Route path="/Guess" element={<RandomGuess />} />
-        <Route path="/LUDO" element={<LudoGame />} />
+        {/* <Route path="/LUDO" element={<LudoGame />} /> */}
         <Route path="/Crick" element={<Cricket />} />
       </Routes>
     </div>

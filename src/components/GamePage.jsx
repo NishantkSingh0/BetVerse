@@ -8,7 +8,7 @@ const imagesURL=["https://th.bing.com/th/id/OIP.XeY97OWJSc0xNON9v93XmgHaH4?w=860
 const randomImage = imagesURL[Math.floor(Math.random() * imagesURL.length)];
 const categories = [
   { 
-    name: 'Random Games', 
+    name: 'Random Guess', 
     bgColor: 'bg-gradient-to-b from-purple-500 to-purple-800',
     icon: '🎲',
     navigate:'/Guess',
@@ -18,13 +18,13 @@ const categories = [
     name: 'YouTube', 
     bgColor: 'bg-gradient-to-b from-blue-500 to-blue-800',
     icon: '📈',
-    desc:'Explore E-sport games and won based on your skillset'
+    desc:'Explore Top Youtube channels and predict their like/Views hike'
   },
   { 
     name: 'Football', 
     bgColor: 'bg-gradient-to-b from-red-500 to-red-800',
     icon: '⚽',
-    desc:'Predict cricket scores and make your money 700% hiked '
+    desc:'Predict Football scores and make your money 200% hiked '
   },
   { 
     name: 'Time-Pass', 
@@ -38,7 +38,7 @@ const categories = [
     bgColor: 'bg-gradient-to-b from-orange-500 to-orange-800',
     icon: '🏏',
     navigate:'/Crick',
-    desc:'Predict cricket scores and make your money 700% hiked'
+    desc:'Predict cricket scores and make your money 300% hiked'
   }
 ];
 
