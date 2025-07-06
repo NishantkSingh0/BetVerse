@@ -1,10 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { ArrowLeft, ShoppingCart } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from './userContext.jsx';
 
 export default function PurchaseCoin() {
   const { userData, setUserData } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      // Push a dummy state
+    window.history.pushState(null, '', window.location.href);
+
+    const onPopState = (event) => {
+      event.preventDefault();
+
+      // Call your custom back logic here
+      navigate('/Games')
+
+      // Re-push state to prevent browser from going back
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    window.addEventListener('popstate', onPopState);
+
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+    };
+  }, []);
 
   const coinPackages = [
     {
@@ -50,7 +72,7 @@ export default function PurchaseCoin() {
       </div>
 
       {/* Current Balance */}
-      <div className="bg-gray-950 rounded-lg shadow-md p-4 mb-6">
+      <div className="bg-gray-950 rounded-lg shadow-md p-4 mb-6 sticky top-4 z-10">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-gray-200 text-sm">Current Balance</p>

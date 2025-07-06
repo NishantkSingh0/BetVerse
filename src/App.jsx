@@ -6,8 +6,10 @@ import LoginPage from './components/LoginPage.jsx'
 import GamePage from './components/GamePage.jsx'
 import RandomGuess from './components/RandomGuess.jsx'
 import PurchaseCoin from './components/PurchaseCoin.jsx'
-// import Practice from './components/Practice.jsx'
+import Practice from './components/Practice.jsx'
 import Cricket from './components/Cricket.jsx'
+import YoutubeAnalyze from './components/YouAnalyz/YoutubeAnalyze.jsx'
+import ShowJsonReceived from './components/YouAnalyz/ShowJsonReceived.jsx'
 
 function App() {
 
@@ -23,8 +25,8 @@ function App() {
         <Route path="/Games" element={<GamePage />} />
         <Route path="/Purchase" element={<PurchaseCoin />} />
         <Route path="/Guess" element={<RandomGuess />} />
-        {/* <Route path="/LUDO" element={<LudoGame />} /> */}
         <Route path="/Crick" element={<Cricket />} />
+        <Route path="/YouAnlyz" element={<YoutubeAnalyze />} />
       </Routes>
     </div>
   )

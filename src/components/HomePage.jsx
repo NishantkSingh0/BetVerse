@@ -16,22 +16,24 @@ const HomePage = () => {
         >
           {/* <source src="/stadium.mp4" type="video/mp4" /> */}
         </video>
-        <h1 className="text-3xl sm:text-6xl font-bold mb-4">
-          🏆 Bet Smart. Win Big.
+        <h1 className="flex items-center text-3xl gap-4 sm:text-6xl font-bold mb-4 space-x-2">
+          <img src="Logo.png" alt="Logo" height={50} width={50} />
+          <span>Bet Smart. Win Big.</span>
         </h1>
+
         <p className="text-lg md:text-xl text-gray-300 max-w-xl mb-8">
-          Real-time odds. Instant wins. Zero limits.
+          Real-time odds, Instant wins, Zero limits..
         </p>
         <div className="flex gap-4 flex-wrap justify-center">
           <button
-            className="bg-gradient-to-r from-green-400 to-blue-500 px-6 py-3 rounded-full font-semibold shadow-lg hover:scale-105 transition"
+            className="bg-gradient-to-r from-green-400 cursor-pointer to-blue-500 px-6 py-3 rounded-full font-semibold shadow-lg hover:scale-105 transition"
             onClick={() => navigate('/Login')}
           >
-            Let's bet!
+           Let's go on !
           </button>
-          <button className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-200 transition">
+          {/* <button className="bg-white text-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-200 transition">
             View Live Odds
-          </button>
+          </button> */}
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogOut, Pencil, X } from 'lucide-react';
 import {useUser} from "./userContext.jsx"
@@ -18,6 +18,7 @@ const categories = [
     name: 'YouTube', 
     bgColor: 'bg-gradient-to-b from-blue-500 to-blue-800',
     icon: '📈',
+    navigate:"/YouAnlyz",
     desc:'Explore Top Youtube channels and predict their like/Views hike'
   },
   { 
@@ -30,14 +31,14 @@ const categories = [
     name: 'Time-Pass', 
     bgColor: 'bg-gradient-to-b from-green-500 to-green-800',
     icon: '⏳',
-    navigate:"/LUDO",
+    // navigate:"/LUDO",
     desc:'Play some timepass games with each other'
   },
   { 
     name: 'Cricket', 
     bgColor: 'bg-gradient-to-b from-orange-500 to-orange-800',
     icon: '🏏',
-    navigate:'/Crick',
+    // navigate:'/Crick',
     desc:'Predict cricket scores and make your money 300% hiked'
   }
 ];
@@ -68,6 +69,25 @@ export default function GamePage() {
     // Handle logout logic here
     navigate('/login');
   };
+  
+  useEffect(() => {
+      // Push a dummy state
+    window.history.pushState(null, '', window.location.href);
+
+    const onPopState = (event) => {
+      event.preventDefault();
+
+      // Do Nothing
+
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    window.addEventListener('popstate', onPopState);
+
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+    };
+  }, []);
 
   const handleEditProfile = () => {
     // Handle edit profile logic here

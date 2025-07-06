@@ -1,0 +1,71 @@
+📘 YouTube Data Use Transparency Policy
+Last Updated: [03-07-2025]
+
+At Game of Experience, we respect and operate within the bounds of YouTube’s API Terms of Service, copyright policies, and community standards. Our platform uses YouTube video data with full attribution, transparency, and in a way that promotes discovery and engagement.
+
+🔹 1. We Use Only the Official YouTube Data API
+- We retrieve all video metadata (title, views, likes, comments, channel name, thumbnails) exclusively via the YouTube Data API v3.
+- We strictly operate within YouTube's provided API quota limits.
+- We do not scrape, crawl, or extract data through unofficial means.
+- We include YouTube’s Terms-compliant attribution and links back to the original videos.
+
+🔹 2. We Do Not Host or Reuse Video Content
+- All YouTube videos are embedded or linked directly to the official source.
+- We do not host, download, republish, modify, or claim ownership of any YouTube content.
+- All thumbnails, logos, and video descriptions are fetched via API and attributed to their rightful creators.
+
+🔹 3. We Drive Views and Engagement Back to YouTube
+- Our users interact with video-based prediction challenges, which encourages them to:
+- Watch videos on YouTube
+- Engage with the creator’s content
+- Track metrics like likes/comments/views/subscriber growth — all within the publicly available metadata
+- Creators benefit from:
+    - Increased video exposure
+    - Repeat engagement
+    - Audience interaction gamified around their content (without affecting it)
+
+🔹 4. We Do Not Manipulate or Influence Metrics
+- We do not incentivize likes, comments, views, or subscriptions through monetary rewards or token exchange.
+- Our users do not perform any action on YouTube from our platform — they only predict how a video might perform based on current trends.
+- We do not allow bots or users to manipulate public stats or algorithmic metrics.
+
+🔹 5. Creator Ownership and Attribution
+- We do not claim any ownership over YouTube content.
+- All rights remain with the original content creators.
+- Each video shown on our platform includes:
+    - Channel name
+    - Video title
+    - Link to the official video
+
+- Public metadata pulled via YouTube API
+- Creators may request to opt out of visibility via our Creator Opt-Out Form at any time.
+
+🔹 6. User Gameplay and Monetization
+- Users purchase virtual coins that are usable across multiple games on our platform.
+- Coins are not convertible to cash and are used to enhance the entertainment experience.
+- Our gameplay around YouTube videos is:
+    - Skill-based
+    - Non-influential
+    - Stat-based prediction games
+    - We are not a gambling platform and do not support or promote any form of betting on YouTube content.
+
+🔹 7. Summary of Compliance Points
+|       Area      |          Policy Alignment         |
+| --------------- | --------------------------------- |
+| Content Use     | ✅ API Only, No Hosting          |
+| Attribution     | ✅ Full Credit Given             |
+| Monetization    | ✅ Indirect, Non-influential     |
+| User Behavior   | ✅ No manipulation or automation |
+| Scraping        | ✅ Not Used                      |
+| API Quota Use   | ✅ Respectfully managed          |
+| Creator Control | ✅ Opt-out option offered        |
+
+
+📩 Contact & Compliance
+If you're a YouTube creator or policy reviewer and have any concerns, please contact us:
+
+📧 nishantsingh.talk@gmail.com
+📝 Creator Opt-Out Request
+📜 YouTube API Terms
+
+We are committed to building ethically, transparently, and in harmony with the YouTube ecosystem.

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import toast from "react-hot-toast";
 import {useUser} from "./userContext.jsx"
@@ -7,6 +7,7 @@ import {useUser} from "./userContext.jsx"
 const RandomGuess = () => {
   // Mock user data - in a real application, this would come from props or context
   const { userData, setUserData } = useUser();
+  const navigate = useNavigate();
 
   // const [selectedNumbers, setSelectedNumbers] = useState([]);
   const selectedNumbersRef = useRef([]);
@@ -41,6 +42,27 @@ const RandomGuess = () => {
       // console.log("hasProcessedResult:", hasProcessedResultRef.current);
     }
   }, [result]);
+
+  useEffect(() => {
+    // Push a dummy state
+    window.history.pushState(null, '', window.location.href);
+
+    const onPopState = (event) => {
+      event.preventDefault();
+
+      // Call your custom back logic here
+      navigate('/Games')
+
+      // Re-push state to prevent browser from going back
+      window.history.pushState(null, '', window.location.href);
+    };
+
+    window.addEventListener('popstate', onPopState);
+
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+    };
+  }, []);
 
   useEffect(() => {
     // Set up the timer that updates every second

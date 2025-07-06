@@ -37,7 +37,7 @@ const LoginPage = () => {
     const result = {
       [phone]: userData,
     };
-    toast.success("you registered successfully!", {
+    toast.success(`Welcome ${userData.Name.split(' ')[0]}!`, {
       duration: 3000,
       position: "top-right",
     });
