@@ -18,11 +18,11 @@ const HomePage = () => {
         </video>
         <h1 className="flex items-center text-3xl gap-4 sm:text-6xl font-bold mb-4 space-x-2">
           <img src="Logo.png" alt="Logo" height={50} width={50} />
-          <span>Bet Smart. Win Big.</span>
+          <span>Predict Smart. Win Big.</span>
         </h1>
 
         <p className="text-lg md:text-xl text-gray-300 max-w-xl mb-8">
-          Real-time odds, Instant wins, Zero limits..
+          Real-time challenges, Instant results, Zero limits...
         </p>
         <div className="flex gap-4 flex-wrap justify-center">
           <button

@@ -11,7 +11,6 @@ const YoutubeAnalyze = () => {
   const [qnsList, setQnsList] = useState([]);
   const [socket, setSocket] = useState(null);
   const [connectionStatus, setConnectionStatus] = useState('Disconnected');
-  // const [predictions, setPredictions] = useState({});
   const [quotaUsed, setQuotaUsed] = useState(0);
   const navigate = useNavigate();
 
@@ -38,24 +37,6 @@ const YoutubeAnalyze = () => {
     "TR": "Turkey",
     "FI": "Finland"
   };
-
-
-  // Channel colors and info
-  const channelConfig = [
-      { color: 'bg-red-700', gradient: 'bg-gradient-to-br from-red-900 via-red-800 to-red-950' },
-      { color: 'bg-blue-600', gradient: 'bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950' },
-      { color: 'bg-green-600', gradient: 'bg-gradient-to-br from-green-900 via-green-800 to-green-950' },
-      { color: 'bg-purple-600', gradient: 'bg-gradient-to-br from-purple-900 via-purple-800 to-purple-950' },
-      { color: 'bg-orange-600', gradient: 'bg-gradient-to-br from-orange-900 via-orange-800 to-orange-950' },
-      { color: 'bg-yellow-600', gradient: 'bg-gradient-to-br from-yellow-900 via-yellow-800 to-yellow-950' },
-      { color: 'bg-amber-600', gradient: 'bg-gradient-to-br from-amber-900 via-amber-800 to-amber-950' },
-      { color: 'bg-teal-600', gradient: 'bg-gradient-to-br from-teal-900 via-teal-800 to-teal-950' },
-      { color: 'bg-cyan-600', gradient: 'bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-950' },
-      { color: 'bg-indigo-600', gradient: 'bg-gradient-to-br from-indigo-900 via-indigo-800 to-indigo-950' },
-      { color: 'bg-pink-600', gradient: 'bg-gradient-to-br from-pink-900 via-pink-800 to-pink-950' },
-      { color: 'bg-rose-600', gradient: 'bg-gradient-to-br from-rose-900 via-rose-800 to-rose-950' },
-      { color: 'bg-lime-600', gradient: 'bg-gradient-to-br from-lime-900 via-lime-800 to-lime-950' },
-  ]//.sort(() => Math.random() - 0.5).slice(0, 4);
 
   useEffect(() => {
     // Push a dummy state
@@ -128,51 +109,6 @@ const YoutubeAnalyze = () => {
     };
   }, []);
 
-  // const Questions = data.map(item => item.Qns);
-
-  // Generate prediction questions
-  // const generatePredictions = (data) => {
-  //   const newPredictions = {};
-    
-  //   data.forEach(video => {
-  //     const currentViews = parseInt(video.stats.ViewRate.at(-1) || 0);
-  //     const currentLikes = parseInt(video.stats.LikeRate.at(-1) || 0);
-  //     const currentComments = parseInt(video.stats.CommentRate.at(-1) || 0);
-
-  //     const now = new Date();
-            
-  //     newPredictions[video.video_id] = [
-  //       {
-  //         question: `Can this video climb from ${currentViews} to ${Math.floor(currentViews * 1.1)} views by 9:25 AM?`,
-  //         type: 'views',
-  //         target: Math.floor(currentViews * 1.1)
-  //       },
-  //       {
-  //         question: `Will this video hit ${Math.floor(currentLikes * 1.2)} likes from the current ${currentLikes} by 10:10 AM?`,
-  //         type: 'likes',
-  //         target: Math.floor(currentLikes * 1.2)
-  //       },
-  //       {
-  //         question: `Can it gather 50 more comments — from ${currentComments} to ${currentComments + 50} — in just 30 minutes?`,
-  //         type: 'comments',
-  //         target: currentComments + 50
-  //       },
-  //       {
-  //         question: `Will it maintain its current momentum of 152.45 views/minute until 10:00 AM?`,
-  //         type: 'engagement',
-  //         target: 'maintain'
-  //       },
-  //       {
-  //         question: `Will this video boost the subscriber count from ${video.subscriberCount} to at least ${Math.ceil(video.subscriberCount * 1.00001)}?`,
-  //         type: 'trending',
-  //         target: 'trending'
-  //       }
-  //     ];
-  //   });
-    
-  //   setPredictions(newPredictions);
-  // };
-
   console.log("Questions",qnsList)
 
   // Format numbers
@@ -183,6 +119,38 @@ const YoutubeAnalyze = () => {
       return (num / 1000).toFixed(1) + 'K';
     }
     return num.toString();
+  };
+
+  const Popup = ({ message, onClose }) => {
+    return (
+        <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-gray-700 rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-xl font-bold mb-4">Confirm Selection</h3>
+            <p className="mb-4">You want to bet <span className="font-bold text-yellow-500">{userData.randomGuess.betAmount}💰</span> on number <span className="font-bold">{pendingSelection}</span>?</p>
+            <div className="bg-gray-800 border border-yellow-200 rounded-lg p-4 mb-6">
+              <p className="font-medium">Balance Change:</p>
+              <p className="text-lg">
+                {userData.Coins- userData.randomGuess.betAmount*userData.randomGuess.list.length}💰 → {Number((Number(userData.Coins) - userData.randomGuess.betAmount*(userData.randomGuess.list.length+1)).toFixed(2))}💰
+                <span className="text-red-500 ml-2">(-{userData.randomGuess.betAmount})</span>
+              </p>
+            </div>
+            <div className="flex space-x-3 justify-end">
+              <button 
+                onClick={cancelSelection}
+                className="px-4 py-2 bg-gray-700 hover:bg-gray-800 rounded-lg transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={confirmSelection}
+                className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600 rounded-lg transition"
+              >
+                Proceed
+              </button>
+            </div>
+          </div>
+        </div>
+    );
   };
 
   // Format time ago
@@ -206,16 +174,16 @@ const YoutubeAnalyze = () => {
     const video = channelData.find(v => v.video_id === expandedVideo[0]);
     if (!video) return null;
 
-    const channelColor = channelConfig[expandedVideo[1]]?.color || 'bg-pink-600';
+    // const channelColor = channelConfig[expandedVideo[1]]?.color || 'bg-pink-600';
     const videoPredictions = qnsList[video.video_id] || [];
-    const gradient=channelConfig[expandedVideo[1]]?.gradient || "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950"
+    // const gradient=channelConfig[expandedVideo[1]]?.gradient || "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950"
 
     return (
       <div className="inset-0 z-50 overflow-auto">
         <div className="flex flex-col  md:flex-row min-h-screen">
 
           {/* Left / Top Panel */}
-          <div className={`md:w-[40%] w-full p-4 ${channelColor} text-white`}>
+          <div className={`md:w-[40%] w-full p-4 bg-purple-800 text-white`}>
 
             {/* Channel Info */}
 
@@ -223,7 +191,7 @@ const YoutubeAnalyze = () => {
               {/* Back Button */}
               <button 
                 onClick={() => setExpandedVideo(null)}
-                className={`mb-4 flex items-center cursor-pointer gap-2 pt-5 py-2 ${channelColor} text-white rounded hover:scale-120 transition duration-200 font-semibold`}
+                className={`mb-4 flex items-center cursor-pointer gap-2 pt-5 py-2  bg-purple-800 text-white rounded hover:scale-120 transition duration-200 font-semibold`}
               >
                 <ArrowLeft className="w-4 h-4 md:w-7 md:h-7 lg:w-8 lg:h-8 transform scale-x-125" />
               </button>
@@ -291,7 +259,7 @@ const YoutubeAnalyze = () => {
           </div>
 
           {/* Right / Bottom Panel */}
-          <div className={`md:w-[60%] w-full ${gradient} p-6 overflow-auto`}>
+          <div className={`md:w-[60%] w-full bg-gradient-to-br from-indigo-900 via-purple-900 to-black p-6 overflow-auto`}>
             <h3 className="text-2xl font-bold mb-6 text-gray-100">What You Think...</h3>
 
             <div className="space-y-4">
@@ -343,27 +311,16 @@ const YoutubeAnalyze = () => {
               <h1 className="block md:hidden text-xl md:text-2xl lg:text-4xl font-bold text-white mb-2">Analytical Prediction</h1>
               <div className={`w-4 h-4 rounded-full ${connectionStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'}`}></div>
               {quotaUsed > 0 && (
-                <div className="text-white opacity-75">
+                <div className="text-white hidden sm:inline-block opacity-75">
                   <span className="text-lg">{quotaUsed}</span>
                 </div>
               )}
             </div>
           </div>
-          <div className="flex items-center justify-center gap-4">
-            {/* <div className="flex items-center gap-2">
-              <div className={`w-3 h-3 rounded-full ${connectionStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'}`}></div>
-              <span className="text-white opacity-75">{connectionStatus}</span>
-            </div> 
-            {quotaUsed > 0 && (
-              <div className="text-white opacity-75">
-                <span className="text-sm">Quota Used: {quotaUsed}</span>
-              </div>
-            )}*/}
-          </div>
         </div>
 
         {/* Channel Cards Grid */}
-        <div className="grid grid-cols-1 gap-6 md:max-w-[80%] mx-auto">
+        <div className="grid grid-cols-1 gap-6 md:max-w-[90%] lg:max-w-[80%] mx-auto">
           {(() => {
             // Step 1: Flatten all questions
             const allQuestions = channelData.flatMap((video, i) => {
@@ -380,64 +337,64 @@ const YoutubeAnalyze = () => {
           
             // Step 3: Render
             return shuffledQuestions.map(({ video, Question, videoIndex, questionIndex }) => {
-              const channelColor = channelConfig[videoIndex]?.color || 'bg-pink-600';
+              // const channelColor = channelConfig[videoIndex]?.color || 'bg-pink-600';
             
               return (
                 <div 
                   key={`${video.video_id}-${questionIndex}`}
-                  className="bg-white rounded-xl shadow-xl overflow-hidden transform hover:[transform:scale(1.01)] transition-all duration-300 hover:shadow-2xl"
-                >
-                  {/* Top Section */}
-                  <div className={`p-4 text-white cursor-pointer ${channelColor}`}
-                    onClick={() => setExpandedVideo([video.video_id, videoIndex])}
-                  >
-                    <div className="flex items-center gap-3 mb-3">
-                      <img
-                        src={video.Logo}
-                        alt="Logo"
-                        className="w-8 h-8 rounded-full shadow-lg"
-                      />
-                      <div className='flex flex-col gap-0.5 leading-none'>
-                        <span className="font-bold text-lg">{video.channelName}</span>
-                        <div className="flex items-center gap-1">
-                          <Users className="w-4 h-4" />
-                          <span>{(video.subscriberCount / 1000000).toFixed(2)}M Subscribers</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              
+                  className="bg-cyan-400/20 rounded-xl shadow-xl overflow-hidden transform hover:[transform:scale(1.01)] transition-all duration-300 hover:shadow-2xl"
+                >              
                   {/* Bottom Section */}
                   <div className="p-4">
                     <div className="flex gap-3 mb-0">
-                      <img 
-                        src={video.thumbnail} 
-                        alt='Video Thumbnail'
-                        className="w-28 h-15 sm:w-25 sm:h-14 object-cover rounded-lg flex-shrink-0"
-                      />
+                      <div>
+                        <img 
+                          src={video.thumbnail} 
+                          alt='Video Thumbnail'
+                          className="w-28 cursor-pointer h-15 sm:w-25 sm:h-14 object-cover rounded-lg flex-shrink-0"
+                          onClick={() => setExpandedVideo([videoIndex])}
+                        />
+                        {/* <button className='block md:hidden items-center gap-1 text-gray-300 bg-gray-600/60 font-medium text-xs leading-relaxed ml-3 mt-1 px-1 py-0.5 rounded'>🛈 insights</button> */}
+                      </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm leading-tight mb-2 line-clamp-2">
+                        <h4 className="font-semibold cursor-pointer text-gray-200 text-sm sm:text-md leading-tight mb-2 line-clamp-2" onClick={() => setExpandedVideo([video.video_id, videoIndex])}>
                           {Question}
                         </h4>
-                        <div className="flex items-center gap-1 text-gray-500 text-xs mb-3">
-                          <Calendar className="w-3 h-3" />
-                                            {/* <p className="inline-block text-gray-300 bg-gray-400/15 font-medium mb-4 text-xs leading-relaxed px-2 py-1 rounded">
-                    
-                  </p> */}
-                          <span>Valid till {channelData[videoIndex].Qns.duration[questionIndex]}</span>
-                        </div>
-                        <div className="flex max-w-3xs justify-between text-xs text-gray-600">
-                          <div className="flex items-center gap-1">
-                            <Eye className="w-3 h-3" />
-                            <span>{formatNumber(parseInt(video.stats.ViewRate.at(-1) || 0))}</span>
+                        <div className="flex items-center gap-3 text-gray-500 text-xs">
+                          <div className="hidden md:inline-flex flex-col sm:flex-row sm:items-center gap-2 text-gray-300 bg-gray-600/50 font-medium text-xs leading-relaxed px-2 py-1 rounded">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="w-3 h-3" />
+                              <span><span className='hidden xl:inline'>Valid till</span> {channelData[videoIndex].Qns.duration[questionIndex]}&nbsp;&nbsp;|</span>
+                            </div>
+
+                            <div className="flex justify-between gap-4 text-xs text-gray-300">
+                              <div className="flex items-center gap-1">
+                                <Eye className="w-3 h-3" />
+                                <span>{formatNumber(parseInt(video.stats.ViewRate.at(-1) || 0))}</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <ThumbsUp className="w-3 h-3" />
+                                <span>{formatNumber(parseInt(video.stats.LikeRate.at(-1) || 0))}</span>
+                              </div>
+                              <div className="hidden lg:flex items-center gap-1">
+                                <MessageCircle className="w-3 h-3" />
+                                <span>{formatNumber(parseInt(video.stats.CommentRate.at(-1) || 0))}</span>
+                              </div>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <ThumbsUp className="w-3 h-3" />
-                            <span>{formatNumber(parseInt(video.stats.LikeRate.at(-1) || 0))}</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MessageCircle className="w-3 h-3" />
-                            <span>{formatNumber(parseInt(video.stats.CommentRate.at(-1) || 0))}</span>
+                          <div className="flex gap-3 w-full sm:w-[90%] md:w-[60%] mx-auto justify-center">
+                            <button
+                              onClick={() => handlePredictionVote(video.video_id, index, 'yes')}
+                              className="flex-1 cursor-pointer md:max-w-[50%] px-4 py-2 bg-green-700 text-white rounded hover:bg-green-600 transition-colors font-medium"
+                            >
+                              Yes
+                            </button>
+                            <button
+                              onClick={() => handlePredictionVote(video.video_id, index, 'no')}
+                              className="flex-1 cursor-pointer px-4 py-2 md:max-w-[50%] bg-blue-700 text-white rounded hover:bg-blue-600 transition-colors font-medium"
+                            >
+                              No
+                            </button>
                           </div>
                         </div>
                       </div>

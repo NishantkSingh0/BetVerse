@@ -182,8 +182,8 @@ for time_str in SCHEDULE_TIMES:
 print("Fetching new video's")
 fetch_new_videos()
 
-# Schedule periodic stats fetch every 30 seconds
-scheduler.add_job(fetch_stats_periodically, 'interval',max_instances=3, seconds=150)
+# Schedule periodic stats fetch every 2.5 minutes
+scheduler.add_job(fetch_stats_periodically, 'interval', seconds=150, max_instances=3, next_run_time=datetime.now())
 print("Starting schedule")
 scheduler.start()
 

@@ -26,7 +26,7 @@ function App() {
         <Route path="/Purchase" element={<PurchaseCoin />} />
         <Route path="/Guess" element={<RandomGuess />} />
         <Route path="/Crick" element={<Cricket />} />
-        <Route path="/YouAnlyz" element={<YoutubeAnalyze />} />
+        <Route path="/YouAnlyz" element={<ShowJsonReceived />} />
       </Routes>
     </div>
   )

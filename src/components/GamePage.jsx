@@ -210,9 +210,9 @@ export default function GamePage() {
 
       {/* Game Categories Section */}
       <div className='px-6 pb-10'>
-        <div className="text-center sm:text-left ml-4 sm:ml-6">
+        <div className="hidden lg:block text-left ml-6">
           <h2 className="text-2xl font-bold text-gray-200 mb-1">Game Categories</h2>
-          <div className="w-40 h-1 border ml-0 sm:ml-3 border-blue-700 rounded bg-blue-700 mb-6 inline-block"></div>
+          <div className="w-40 h-1 border ml-3 border-blue-700 rounded bg-blue-700 mb-6 inline-block"></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {categories.map((category, index) => (
